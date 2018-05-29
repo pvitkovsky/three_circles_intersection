@@ -17,6 +17,7 @@ public class TestJunit {
 		System.out.println(b);
 		System.out.println(c);
 		assertEquals(true, Circle.common(a,b,c));
-		assertEquals("CommonPoint [g=[Point (4.196; 10.088), Point (2.054; 3.662)]]", Circle.commonp(a,b,c).toString());
+		assertEquals("CommonPoint [g=[Point (4,196; 10,088), Point (2,054; 3,662)]]", Circle.commonp(a,b,c).toString());
+		//TEST COMMIT - DOT VS COMMA TEST CASE
    }
 }

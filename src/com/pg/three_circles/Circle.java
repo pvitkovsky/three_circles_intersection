@@ -106,7 +106,7 @@ public class Circle {
 					return false;
 				}
 			case inclusion:
-				return true;
+				return true; 
 				
 			default:
 				return false;
@@ -118,7 +118,6 @@ public class Circle {
 			return false;
 		}
 	}
-	
 	
 	// entry point for common point;
 	public static CommonPoint commonp(Circle c1, Circle c2, Circle c3){
@@ -134,7 +133,7 @@ public class Circle {
 				return new CommonPoint();
 			}
 		case inclusion:
-			// the smaller of the circles c1 and c2
+			// the smaller of the circles c1 and c2 //why the smaller?
 			c = c1.getR()>c2.getR()?c2:c1;
 			switch (common(c, c3)) {
 			case intersection:
@@ -147,7 +146,8 @@ public class Circle {
 				}
 			case inclusion:
 
-				return new CommonPoint(); // undefined return
+				return new CommonPoint(); //some points in c3 are in c1; 
+				// test ab = 2; r1 = 2.5; r2 = 1
 				
 			default:
 				return new CommonPoint();
@@ -163,8 +163,8 @@ public class Circle {
 					return new CommonPoint();
 				}
 			case inclusion:
-				return new CommonPoint(); // undefined return
-				
+				return new CommonPoint(); //some points in c3 are in c1; 
+				// test ab = 2; r1 = 2.5; r2 = 1
 			default:
 				return new CommonPoint();
 			}
@@ -192,7 +192,7 @@ public class Circle {
 		//return Type: intersection or inclusion
 		double r1 = c1.getR();
 		double r2 = c2.getR();
-		double ab = Math.sqrt(Math.pow((c1.getX()-c2.getX()),2)+Math.pow((c1.getY()-c2.getY()),2));
+		double ab = Math.sqrt(Math.pow((c1.getX()-c2.getX()),2)+Math.pow((c1.getY()-c2.getY()),2)); //ab is a distance between centres
 		if (c1.equals(c2)) {
 			return Type.equals;
 		}

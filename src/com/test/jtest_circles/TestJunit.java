@@ -3,21 +3,41 @@ package com.test.jtest_circles;
 import org.junit.Test;
 
 import com.pg.three_circles.Circle;
+import com.pg.three_circles.Type;
 
 import static org.junit.Assert.assertEquals;
 
 public class TestJunit {
    @Test
-	
-   public  void testCirclesI() {
-		Circle a = new Circle(5., 5., 3.);
-		Circle b = new Circle(5., 5., 3.);
-		Circle c = new Circle(2., 6., 2.);
-		System.out.println(a);
-		System.out.println(b);
-		System.out.println(c);
-		assertEquals(true, Circle.common(a,b,c));
-		assertEquals("CommonPoint [g=[Point (4,196; 10,088), Point (2,054; 3,662)]]", Circle.commonp(a,b,c).toString());
-		//TEST COMMIT - DOT VS COMMA TEST CASE
-   }
+   public  void testCirclesAI() {
+		assertEquals(Type.equals, Circle.common(
+				new Circle(5., 5., 3.),
+				new Circle(5., 5., 3.)));
+		   }
+   @Test
+   public  void testCirclesAII() {
+	   // expected this would be an inclusion, but it is intersections
+		assertEquals(Type.inclusion, Circle.common(
+				new Circle(0., 0., 3.),
+				new Circle(1., 0., 1.)));
+		   }
+   @Test
+   public  void testCirclesAIII() {//
+		assertEquals(Type.intersection, Circle.common(
+				new Circle(5., 5., 3.),
+				new Circle(10., 5., 3.)));
+		   }
+   @Test
+   public  void testCirclesAIV() {//border case
+		assertEquals(Type.intersection, Circle.common(
+				new Circle(4., 5., 3.),
+				new Circle(10., 5., 3.)));
+		   }
+   @Test
+   public  void testCirclesAV() {
+		assertEquals(Type.none, Circle.common(
+				new Circle(0., 5., 3.),
+				new Circle(10., 5., 3.)));
+		   }
+
 }

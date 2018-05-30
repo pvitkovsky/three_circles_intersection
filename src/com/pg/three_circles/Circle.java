@@ -3,7 +3,7 @@ package com.pg.three_circles;
 import java.util.ArrayList;
 import java.util.Random;
 
-enum Type {intersection, inclusion, equals, none};
+
 
 public class Circle {
 	private double x,y,r;
@@ -188,7 +188,7 @@ public class Circle {
 		return false;
 	}
 
-	private static Type common(Circle c1, Circle c2) {
+	public static Type common(Circle c1, Circle c2) {
 		//return Type: intersection or inclusion
 		double r1 = c1.getR();
 		double r2 = c2.getR();
@@ -209,8 +209,8 @@ public class Circle {
 	private static ArrayList<Point> getPointsOfIntersection(Circle c1, Circle c2) throws Error {
 		ArrayList<Point> res = new ArrayList<>();
 		double x, y;
-		//�?аходим уравнени�? окружно�?тей и приравниваем их друг другу, решаем уравнение, получаем точку (или две) �? координатами.
-		// Уравнение первой окружно�?ти: (x-c1.getX())pow2+(y-c1.getY())pow2=c1.getR()*c1.getR()
+		//находим уравнение окружностей и приравниваем их друг другу, решаем уравнение, получаем точку (или две) с координатами.
+		// Уравнение первой окружности: (x-c1.getX())pow2+(y-c1.getY())pow2=c1.getR()*c1.getR()
 		// второе - по аналогии
 		double r1pow2 = c1.getR()*c1.getR();
 		double r2pow2 = c2.getR()*c2.getR();
@@ -220,7 +220,7 @@ public class Circle {
 		double x2pow2 = c2.getX()*c2.getX();
 		double y1pow2 = c1.getY()*c1.getY();
 		double y2pow2 = c2.getY()*c2.getY();
-		// квадраты ик�?ов (x) и игреков (y) при приравнивании уравнений �?окраща�?т�?�?, по�?тому �? их не учитыва�?.
+		// квадраты иксов (x) и игреков (y) при приравнивании уравнений сокращастсс, постому с их не учитывас.
 		// -2*X*c1.getX() + x1pow2 - 2*Y*c1.getY() + y1pow2 - r1pow2 + 2*X*c2.getX() - x2pow2 + 2*Y*c2.getY() - y2pow2 + r2pow2 = 0  
 		double constant = x1pow2+y1pow2-r1pow2-x2pow2-y2pow2+r2pow2;
 		// 2*X*(c2.getX() - c1.getX()) + 2*Y*(c2.getY() - c1.getY()) + constant = 0
@@ -230,7 +230,7 @@ public class Circle {
 		//	выражаем:
 		//	2*X*dX = -(2*Y*dY + constant)
 		//	X = -(2*Y*dY + constant)/2*dX;
-		// 	под�?тавл�?ем в уравнение окружно�?ти и решаем:
+		// 	подставляем в уравнение окружности и решаем:
 		//	Xpow2 + Ypow2 - 2*X*c1.getX() + x1pow2 - 2*Y*c1.getY() + y1pow2 - r1pow2 = 0
 		double constant1 = x1pow2+y1pow2-r1pow2;
 		double a = 1-Math.pow(dY,2)/Math.pow(dX,2);
@@ -238,13 +238,13 @@ public class Circle {
 		double c = Math.pow(constant/(4*dX), 2)+c1.getX()*constant/dX+constant1;
 		double d = Math.pow(b, 2)-4*a*c;
 		if(a==0) {
-			//е�?ли ко�?ффициент при Y = 0, то решаем линейное уравнение.
+			//если коэффициент при Y = 0, то решаем линейное уравнение.
 			y = -c/b;
 			x = -(2*y*dY + constant)/(2*dX);
 			res.add(new Point(x,y));
 		} else {
 			if (d<0) {
-				// �?ет решений
+				// сет решений
 				throw new Error("No intersection point");
 			}
 			if (d==0) {

@@ -196,7 +196,7 @@ public class Circle {
 		if (c1.equals(c2)) {
 			return Type.equals;
 		}
-		if ((r1+r2)>=ab) {
+		if ((r1+r2)>=ab&&Math.abs(r1-r2)<=ab) {
 			return Type.intersection;
 		}
 		if (ab<Math.abs(r1-r2)) {

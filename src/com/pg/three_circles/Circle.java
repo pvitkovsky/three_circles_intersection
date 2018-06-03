@@ -51,10 +51,8 @@ public class Circle extends Point {
 		setR(r);
 	}
 	
-	public boolean contains(Point point) {
+	public boolean containsPoint(Point point) {
 		double distance = Math.sqrt(Math.pow((point.getX()- getX()), 2)+Math.pow((point.getY()-getY()), 2));
-	//	System.out.println(point + " " + this);
-	//	System.out.println(distance + " " + r);
 		if (distance  < r + TOLERANCE) {
 			return true;
 		}
@@ -63,6 +61,11 @@ public class Circle extends Point {
 	
 	public boolean sameCircle(Circle other) {
 		return (intersectionType(this, other) == IntersectionType.equals);
+	}
+	
+
+	public boolean containsCircle(Circle other) {
+		return (intersectionType(other, this) == IntersectionType.inclusion);
 	}
 	
 	public boolean isContainedIn(Circle other) {

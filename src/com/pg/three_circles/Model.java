@@ -36,7 +36,7 @@ public class Model {
 			boolean keepCircle = true;
 			for(int j = i + 1; j < circList.size(); j++) {
 				Circle cTestAgainst = circList.get(j);
-				if(cTest.sameCircle(cTestAgainst) || cTest.isContainedIn(cTestAgainst)) {
+				if(cTest.sameCircle(cTestAgainst) || cTest.containsCircle(cTestAgainst)) {
 					keepCircle = false;
 					break;
 				}
@@ -81,7 +81,7 @@ public class Model {
 		for (PairCircle pair : pairs){
 			if (pair.intersectionType() == IntersectionType.contact) {
 				Point potentialContact = pair.contactPoint();
-				for(Circle c : circles) if (!c.contains(potentialContact)) {
+				for(Circle c : circles) if (!c.containsPoint(potentialContact)) {
 					//System.out.println("not contained?");
 					return false;
 				}

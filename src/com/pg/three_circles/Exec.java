@@ -1,25 +1,31 @@
 package com.pg.three_circles;
 
+import java.util.ArrayList;
+
 public class Exec {
 
 	public static void main() {
-		Circle c1 = Circle.getRandomCircle();
-		Circle c2 = Circle.getRandomCircle();
-		Circle c3 = Circle.getRandomCircle();
-		System.out.println(c1);
-		System.out.println(c2);
-		System.out.println(c3);
-		System.out.println(Circle.common(c1, c2, c3));
-
-		System.out.println("-----------------------");
-    
-		Circle a = new Circle(5., 5., 3.);
-		Circle b = new Circle(5., 5., 3.);
-		Circle c = new Circle(2., 6., 2.);
-		System.out.println(a);
-		System.out.println(b);
-		System.out.println(c);
-		System.out.println(Circle.common(a,b,c));
+		Circle a = new Circle(0., 0., 1.);
+		Circle b = new Circle(1., 0., 1.);
+		Circle c = new Circle(2., 0., 1.);
+		Circle d = new Circle(3., 0., 1.);
+		
+		test2(a, b);
+		test2(a, c); //problematic test case - see PairCircle.getPointsOfIntersection for (0, 0) ; (2. 0);
+		test2(a, d);
+		test2(b, c);
+		test2(b, d);
+		test2(c, d);
+		test2(d, d);
+			
+	}
+	
+	public static void test2(Circle first, Circle second) {
+		ArrayList<Circle> circles = new ArrayList<Circle>();
+		circles.add(first);
+		circles.add(second);
+		Model mod = new Model(circles);
+		System.out.println(mod.getCommonPointExists());
 	}
 
 }

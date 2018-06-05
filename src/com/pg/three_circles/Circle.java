@@ -118,64 +118,7 @@ public class Circle {
 			return false;
 		}
 	}
-	
-	// entry point for common point;
-	public static CommonPoint commonp(Circle c1, Circle c2, Circle c3){
-		ArrayList<Point> g;
-		Circle c;
-		switch (common(c1,c2)) {
-		case intersection:
-			try {
-				g = getPointsOfIntersection(c1, c2);
-				System.out.println("intersection c1 and c2 "+g);
-				return pointIntoCircle(g,c3) ? new CommonPoint(g) :  new CommonPoint();
-			} catch (Error e) {
-				return new CommonPoint();
-			}
-		case inclusion:
-			// the smaller of the circles c1 and c2 //why the smaller?
-			c = c1.getR()>c2.getR()?c2:c1;
-			switch (common(c, c3)) {
-			case intersection:
-				try {
-					g = getPointsOfIntersection(c, c3);
-					System.out.println("intersection c3 "+g);
-					return g.size()>0 ? new CommonPoint(g) :  new CommonPoint();
-				} catch (Error e) {
-					return new CommonPoint();
-				}
-			case inclusion:
 
-				return new CommonPoint(); //some points in c3 are in c1; 
-				// test ab = 2; r1 = 2.5; r2 = 1
-				
-			default:
-				return new CommonPoint();
-			}
-		case equals:
-			switch (common(c1, c3)) {
-			case intersection:
-				try {
-					g = getPointsOfIntersection(c1, c3);
-					System.out.println("intersection c3 "+g);
-					return g.size()>0 ? new CommonPoint(g) : new CommonPoint();
-				} catch (Error e) {
-					return new CommonPoint();
-				}
-			case inclusion:
-				return new CommonPoint(); //some points in c3 are in c1; 
-				// test ab = 2; r1 = 2.5; r2 = 1
-			default:
-				return new CommonPoint();
-			}
-		case none:
-			return new CommonPoint();
-			
-		default:
-			return new CommonPoint();
-		}
-	}
-	
 	private static boolean pointIntoCircle(ArrayList<Point> g, Circle c3) {
 		double distance;
 		double r = c3.getR();
@@ -202,7 +145,6 @@ public class Circle {
 		if (ab<Math.abs(r1-r2)) {
 			return Type.inclusion;
 		}
-		
 		return Type.none;
 	}
 	

@@ -79,7 +79,7 @@ public class Circle extends Point {
 		if (c1.equals(c2)) {
 			return IntersectionType.equals;
 		}
-		if ((r1+r2)>ab) {
+		if ((r1+r2)>ab&&Math.abs(r1-r2)<=ab) {
 			return IntersectionType.intersection;
 		}
 		if ((r1+r2)==ab) {

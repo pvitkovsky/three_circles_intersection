@@ -1,0 +1,42 @@
+How to partition all inputs for a module with test cases? Study
+
+Testing Circle.IntersectionType:
+  Case #1: 2 circles:
+  For CircleA {(X>0;Y>0} (X<0;Y>0;) (X<0;Y<0) (X>0;Y<0);} 
+    For CircleB {(X>0;Y>0} (X<0;Y>0;) (X<0;Y<0) (X>0;Y<0);} 
+      InclusionAB;
+      InclusionBA;
+      Intersection;
+      Contact;
+      No contact. 
+  Total 4*4*5 = 80 test cases;
+  
+  Case #2: 2 circles:
+  For CircleA == CircleB {(X>0;Y>0} (X<0;Y>0;) (X<0;Y<0) (X>0;Y<0);} 
+      Equals;
+  For CircleA != CircleB {(X>0;Y>0} (X<0;Y>0;) (X<0;Y<0) (X>0;Y<0);}
+      Not equal
+  Total 4*2 = 8 test cases;
+  
+  Case#3: Repeat Cases 1 and 2 with one circle R=0;
+  Total 4*4*4 + 8 = 56 test cases, as we do not expect intersection on circle with R=0; 
+  
+Total 144 test cases to cover every legal input. 
+// We do not test R < 0 b/c in the program specification it is said that R must be positive. 
+  
+Testing Circle.containsPoint
+  Case#1: Circle {(X>0;Y>0} (X<0;Y>0;) (X<0;Y<0) (X>0;Y<0);} 
+    Circle contains point;
+    Circle touches point; 
+    Circle does not contain point 
+  Total 12 test cases;
+Total 12 (...)
+
+Testing Pair.ContactPoint{...} // as it is a stub. A good case of TDD  
+  By specification, pair.ContactPoint takes only 2 intersecting cirles. Therefore:
+  Case #1: Pair
+     For CircleA {(X>0;Y>0} (X<0;Y>0;) (X<0;Y<0) (X>0;Y<0);} 
+        For CircleB {(X>0;Y>0} (X<0;Y>0;) (X<0;Y<0) (X>0;Y<0);} 
+          Assert first IntersectionPoint.
+  Total 16 test cases;
+Total 16 (...)

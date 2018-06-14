@@ -20,6 +20,13 @@ public class Model {
 		return pairs;
 	}
 	
+	private void printPairs() {
+		for (PairCircle pair : pairs){
+			pair.printPair();
+			System.out.println("	contact " + pair.intersectionType());
+		}
+	}
+	
 	public Model(ArrayList<Circle> circles) {
 		super();
 		this.circles = simplify(circles);
@@ -45,24 +52,40 @@ public class Model {
 		}
 		return res;
 	}
-
+	
 	private ArrayList<PairCircle> createPairs() {
 		ArrayList<PairCircle> set = new ArrayList<PairCircle>();
 		set.add(new PairCircle(circles.get(0), circles.get(circles.size()-1)));
-		for (int i = 1; i < circles.size(); i++){
-			set.add(new PairCircle(circles.get(i-1), circles.get(i)));
+		if (circles.size() > 2) {
+			for (int i = 1; i < circles.size(); i++){
+				set.add(new PairCircle(circles.get(i-1), circles.get(i)));
+			}
 		}
 		return set;
 	}
 	
 	private boolean testCommonPoint() {
+		System.out.println("NEW TEST");
+		printPairs();
 		if (circles.size() == 1) return true;
+		System.out.println("  More than 1 circle");
 		if (testNoContact()) return false;  
+		System.out.println("  Contact or intersection exists");
 		if (testContactExists()) return testContactPoints();
-		return true;
-	
+		System.out.println("  Intersection exists");
+		return testIntersectionPoints();
 	}
-	
+
+	private boolean pointBelongsToAll(Point p) {
+		System.out.println("	Found "+p.toString());
+		for(Circle c : circles) if (!c.containsPoint(p)) {
+			System.out.println("	Point does not belong to " +c.toString());
+			return false;
+		}
+		System.out.println("	Point belongs to all circles");
+		return true;
+	}
+
 	private boolean testNoContact() {
 		for (PairCircle pair : pairs){
 			if (pair.intersectionType() == IntersectionType.none) return true;
@@ -81,14 +104,25 @@ public class Model {
 		for (PairCircle pair : pairs){
 			if (pair.intersectionType() == IntersectionType.contact) {
 				Point potentialContact = pair.contactPoint();
-				for(Circle c : circles) if (!c.containsPoint(potentialContact)) {
-					//System.out.println("not contained?");
-					return false;
-				}
+				if(pointBelongsToAll(potentialContact)) return true;
 			}
 		}
-		return true;
+		return false;
 	}
+
+	private boolean testIntersectionPoints() {
+		ArrayList<Point> interPoints = new ArrayList<Point>();
+		for (PairCircle pair : pairs){
+			if (pair.intersectionType() == IntersectionType.intersection) {
+				interPoints.addAll(pair.intersectionPoints());
+			}
+		}
+		for(Point p : interPoints) {
+			if (pointBelongsToAll(p)) return true;
+		}
+		return false;
+	}
+
 
 	private Point findP() {
 		// TODO Auto-generated method stub

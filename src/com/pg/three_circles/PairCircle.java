@@ -7,6 +7,12 @@ public class PairCircle extends Line {
 	private final Circle firstC;
 	private final Circle secondC;
 	
+	public void printPair() {
+		System.out.println("  Pair of circles");
+		System.out.println("	"+firstC.getX()+" "+firstC.getY()+" "+firstC.getR());
+		System.out.println("	"+secondC.getX()+" "+secondC.getY()+" "+secondC.getR());
+	}
+	
 	public PairCircle(Circle firstC, Circle secondC) {
 		super(firstC.getCentre(), secondC.getCentre());
 		this.firstC = firstC;
@@ -21,6 +27,10 @@ public class PairCircle extends Line {
 		double ab = Math.sqrt(Math.pow((c1.getX()-c2.getX()),2)+Math.pow((c1.getY()-c2.getY()),2));
 		if ((r1+r2) - ab > TOLERANCE) throw new Error("Failure getting contactPoint inapplicable Pair ");
 		return this.getPointsOfIntersectionII().get(0); // stub
+	}
+	
+	public ArrayList<Point> intersectionPoints() {
+		return this.getPointsOfIntersectionII(); // stub
 	}
 	
 	public IntersectionType intersectionType() {

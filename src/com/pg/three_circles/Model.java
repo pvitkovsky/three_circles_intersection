@@ -1,6 +1,7 @@
 package com.pg.three_circles;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Model {
 	private final ArrayList<Circle> circles;
@@ -123,7 +124,29 @@ public class Model {
 		return false;
 	}
 
-
+	private Optional<Point> findContactPoints(){
+		for (PairCircle pair : pairs){
+			if (pair.intersectionType() == IntersectionType.contact) {
+				Point potentialContact = pair.contactPoint();
+				if(pointBelongsToAll(potentialContact)) return Optional.of(potentialContact);
+			}
+		}
+		return Optional.empty();
+	}
+	
+	private Optional<Point> findtersectionPoints() {
+		ArrayList<Point> interPoints = new ArrayList<Point>();
+		for (PairCircle pair : pairs){
+			if (pair.intersectionType() == IntersectionType.intersection) {
+				interPoints.addAll(pair.intersectionPoints());
+			}
+		}
+		for(Point p : interPoints) {
+			if (pointBelongsToAll(p)) return Optional.of(p);
+		}
+		return Optional.empty();
+	}
+	
 	private Point findP() {
 		// TODO Auto-generated method stub
 		return null;

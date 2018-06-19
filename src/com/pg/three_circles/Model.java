@@ -7,13 +7,13 @@ public class Model {
 	private final ArrayList<Circle> circles;
 	private final ArrayList<PairCircle> pairs;
 	private final boolean commonPointExists;
-	private final Point pointP;
+	private final Optional<Point> pointP;
 	
 	public boolean getCommonPointExists() {
 		return commonPointExists;
 	}
 	
-	public Point getPointP() {
+	public Optional<Point> getPointP() {
 		return pointP;
 	}
 
@@ -102,26 +102,13 @@ public class Model {
 	}
 	
 	private boolean testContactPoints() {
-		for (PairCircle pair : pairs){
-			if (pair.intersectionType() == IntersectionType.contact) {
-				Point potentialContact = pair.contactPoint();
-				if(pointBelongsToAll(potentialContact)) return true;
-			}
-		}
-		return false;
+		Optional<Point> cp = findContactPoints();
+		return cp.isPresent();
 	}
 
 	private boolean testIntersectionPoints() {
-		ArrayList<Point> interPoints = new ArrayList<Point>();
-		for (PairCircle pair : pairs){
-			if (pair.intersectionType() == IntersectionType.intersection) {
-				interPoints.addAll(pair.intersectionPoints());
-			}
-		}
-		for(Point p : interPoints) {
-			if (pointBelongsToAll(p)) return true;
-		}
-		return false;
+		Optional<Point> ip = findIntersectionPoints();
+		return ip.isPresent();
 	}
 
 	private Optional<Point> findContactPoints(){
@@ -134,7 +121,7 @@ public class Model {
 		return Optional.empty();
 	}
 	
-	private Optional<Point> findtersectionPoints() {
+	private Optional<Point> findIntersectionPoints() {
 		ArrayList<Point> interPoints = new ArrayList<Point>();
 		for (PairCircle pair : pairs){
 			if (pair.intersectionType() == IntersectionType.intersection) {
@@ -147,9 +134,13 @@ public class Model {
 		return Optional.empty();
 	}
 	
-	private Point findP() {
-		// TODO Auto-generated method stub
-		return null;
+	private Optional<Point> findP() {
+		if(testCommonPoint()){
+			if(testContactPoints()) return findContactPoints();
+			if(testIntersectionPoints()) return findIntersectionPoints();
+		} 
+		return Optional.empty();
+		
 	}
 
 }

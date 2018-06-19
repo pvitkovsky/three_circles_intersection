@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Exec {
 
@@ -33,6 +34,14 @@ public class Exec {
 		Circle l = new Circle(2., 0., 2.1);
 		assertFalse(test3(i,j,l));
 		
+		
+		Optional<Point> sol = getPoint(i, j, k);
+		if (sol.isPresent()) {
+		  System.out.println(sol.get());
+		} else {
+		  System.out.println("Not found");
+		}
+		
 	}
 	
 	public static boolean test2(Circle first, Circle second) {
@@ -49,12 +58,21 @@ public class Exec {
 		circles.add(third);
 		return testAll(circles);
 	}
-	
+		
 	public static boolean testAll(final ArrayList<Circle> circles) {
 		Model mod = new Model(circles);
 		final boolean res = mod.getCommonPointExists();
 		System.out.println(res);
 		return res;
+	}
+	
+	public static Optional<Point> getPoint(Circle first, Circle second, Circle third) {
+		ArrayList<Circle> circles = new ArrayList<Circle>();
+		circles.add(first);
+		circles.add(second);
+		circles.add(third);
+		Model mod = new Model(circles);
+		return mod.getPointP(); 
 	}
 
 }
